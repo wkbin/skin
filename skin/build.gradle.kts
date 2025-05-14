@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrainsKotlinParcelize)
 }
 
 android {
@@ -8,13 +9,10 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "top.wkbin.skin"
-        minSdk = 31
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,14 +34,16 @@ android {
 }
 
 dependencies {
-    // 引用 jar或module
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+}
+
+tasks.register("makeJar", Copy::class) {
+    val jarName = "skin"
+    delete("build/libs/$jarName.jar")
+    delete("build/intermediates/aar_main_jar")
+    from("build/intermediates/aar_main_jar/release/syncReleaseLibJars/classes.jar")
+    into("build/libs/")
+    include("classes.jar")
+    rename("classes.jar", "$jarName.jar")
+    dependsOn("build")
 }
