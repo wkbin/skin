@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SkinSupport">
+        <attr name="statusBarColor" format="color|reference" />
+        <attr name="navigationBarColor" format="color|reference" />
+        <attr name="cursorColor" format="color|reference" />
+    </declare-styleable>
+</resources> 

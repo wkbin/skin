@@ -13,23 +13,25 @@ import androidx.core.content.res.ResourcesCompat
 class SkinResources private constructor(val context: Context) {
 
     companion object {
+        private const val TAG = "SkinResources"
+
         @SuppressLint("StaticFieldLeak")
         @Volatile
         private var instance: SkinResources? = null
-
         fun init(context: Context) {
             instance ?: synchronized(this) {
                 instance ?: SkinResources(context.applicationContext).also { instance = it }
             }
         }
 
-        fun get() = instance!!
+        fun get(): SkinResources {
+            return instance!!
+        }
     }
 
     private val appResources = context.resources
     private var skinResources: Resources? = null
-    private var skinPkgName: String? = null
-
+    private var skinPkgName = ""
     private var useDefaultSkin = true
 
     fun reset() {
@@ -38,10 +40,11 @@ class SkinResources private constructor(val context: Context) {
         useDefaultSkin = true
     }
 
-    fun applySkin(resources: Resources?, pkgName: String?) {
+    fun applySkin(resources: Resources?, pkgName: String) {
         skinResources = resources
         skinPkgName = pkgName
         useDefaultSkin = TextUtils.isEmpty(pkgName) || resources == null
+        Log.d(TAG, "Applied skin: pkgName=$pkgName, useDefaultSkin=$useDefaultSkin")
     }
 
     fun background(resId: Int): Any {
@@ -49,40 +52,46 @@ class SkinResources private constructor(val context: Context) {
         if (resourceTypeName == "color") {
             return color(resId)
         }
-
         return drawable(resId)
     }
 
-    fun color(resId: Int): Long {
+    fun color(resId: Int): Int {
         if (useDefaultSkin) {
-            return ResourcesCompat.getColor(appResources, resId, null).toLong()
+            return ResourcesCompat.getColor(appResources, resId, null)
         }
-        try {
-            val skinId = identifier(resId)
-            if (skinId == 0) {
-                return ResourcesCompat.getColor(appResources, resId, null).toLong()
-            }
 
-            return ResourcesCompat.getColor(skinResources!!, skinId, null).toLong()
-        }catch (e: Resources.NotFoundException){
-            return ResourcesCompat.getColor(appResources, resId, null).toLong()
+        val skinId = identifier(resId)
+        Log.d(TAG, "Color mapping: original=$resId, skin=$skinId")
+        if (skinId == 0) {
+            return ResourcesCompat.getColor(appResources, resId, null)
+        }
+
+        try {
+            return ResourcesCompat.getColor(skinResources!!, skinId, null)
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting color from skin: ${e.message}")
+            return ResourcesCompat.getColor(appResources, resId, null)
         }
     }
 
-    @SuppressLint("DiscouragedApi")
-    fun identifier(resId: Int): Int {
+    private fun identifier(resId: Int): Int {
         if (useDefaultSkin) {
             return resId
         }
 
         val resName = appResources.getResourceEntryName(resId)
         val resType = appResources.getResourceTypeName(resId)
-
-        val id =  skinResources!!.getIdentifier(resName, resType, skinPkgName)
-        if (id == 0){
-            return resId
+        
+        // 尝试在皮肤包中查找资源
+        var skinId = skinResources!!.getIdentifier(resName, resType, skinPkgName)
+        
+        // 如果找不到，尝试使用默认资源
+        if (skinId == 0) {
+            skinId = skinResources!!.getIdentifier(resName, resType, "android")
         }
-        return id
+        
+        Log.d(TAG, "Resource mapping: name=$resName, type=$resType, pkg=$skinPkgName, id=$skinId")
+        return skinId
     }
 
     fun colorStateList(resId: Int): ColorStateList {
@@ -91,11 +100,17 @@ class SkinResources private constructor(val context: Context) {
         }
 
         val skinId = identifier(resId)
+        Log.d(TAG, "ColorStateList mapping: original=$resId, skin=$skinId")
         if (skinId == 0) {
             return ResourcesCompat.getColorStateList(appResources, resId, null)!!
         }
 
-        return ResourcesCompat.getColorStateList(skinResources!!, skinId, null)!!
+        try {
+            return ResourcesCompat.getColorStateList(skinResources!!, skinId, null)!!
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting ColorStateList from skin: ${e.message}")
+            return ResourcesCompat.getColorStateList(appResources, resId, null)!!
+        }
     }
 
     fun drawable(resId: Int): Drawable {
@@ -103,15 +118,16 @@ class SkinResources private constructor(val context: Context) {
             return ResourcesCompat.getDrawable(appResources, resId, null)!!
         }
 
-        try {
-            val skinId = identifier(resId)
-            Log.i("temp", "drawable: $skinId")
-            if (skinId == 0) {
-                return ResourcesCompat.getDrawable(appResources, resId, null)!!
-            }
+        val skinId = identifier(resId)
+        Log.d(TAG, "Drawable mapping: original=$resId, skin=$skinId")
+        if (skinId == 0) {
+            return ResourcesCompat.getDrawable(appResources, resId, null)!!
+        }
 
+        try {
             return ResourcesCompat.getDrawable(skinResources!!, skinId, null)!!
-        } catch (e: Resources.NotFoundException){
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting drawable from skin: ${e.message}")
             return ResourcesCompat.getDrawable(appResources, resId, null)!!
         }
     }
@@ -124,12 +140,9 @@ class SkinResources private constructor(val context: Context) {
                 if (attributeValue.startsWith("#") || attributeValue.startsWith("?")) {
                     return 0
                 }
-
                 return attributeValue.substring(1).toInt()
             }
         }
-
         return 0
     }
-
 }

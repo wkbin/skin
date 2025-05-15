@@ -1,0 +1,25 @@
+R_DEF: Internal format may change without notice
+local
+color accent
+color background
+color background_color
+color button_background
+color button_text
+color card_background
+color input_background
+color input_hint
+color input_stroke
+color input_text
+color primary
+color primary_dark
+color primary_light
+color progress_indicator
+color surface
+color switch_thumb
+color switch_track
+color text_primary
+color text_secondary
+color title_color
+string app_name
+style Theme.MyApplication
+style Theme.SkinDemo

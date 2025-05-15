@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="D:\work2\Skin\skins\skin_red"
+    name=":skins:skin_red"
+    type="APP"
+    maven="Skin.skins:skin_red:unspecified"
+    agpVersion="8.5.1"
+    buildFolder="build"
+    bootClassPath="D:\android_studio\sdk\platforms\android-34\android.jar;D:\android_studio\sdk\build-tools\34.0.0\core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>

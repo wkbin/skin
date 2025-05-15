@@ -35,6 +35,9 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.hiddenapibypass)
+    implementation(libs.google.material)
 }
 
 tasks.register("makeJar", Copy::class) {

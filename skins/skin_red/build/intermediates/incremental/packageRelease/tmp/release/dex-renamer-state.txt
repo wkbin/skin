@@ -1,0 +1,4 @@
+#Thu May 15 11:04:48 CST 2025
+base.0=D\:\\work2\\Skin\\skins\\skin_red\\build\\intermediates\\dex\\release\\mergeDexRelease\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

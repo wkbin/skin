@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 基础颜色 -->
+    <color name="primary">#F44336</color>
+    <color name="primary_dark">#D32F2F</color>
+    <color name="primary_light">#FFCDD2</color>
+    <color name="accent">#FF5252</color>
+    
+    <!-- 文本颜色 -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    
+    <!-- 背景颜色 -->
+    <color name="background">#FFEBEE</color>
+    <color name="surface">#F5F5F5</color>
+    <color name="card_background">#FFFFFF</color>
+    
+    <!-- 控件颜色 -->
+    <color name="button_background">#F44336</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="switch_track">#FFCDD2</color>
+    <color name="switch_thumb">#F44336</color>
+    <color name="progress_indicator">#F44336</color>
+    
+    <!-- 输入框颜色 -->
+    <color name="input_background">#FFFFFF</color>
+    <color name="input_text">#212121</color>
+    <color name="input_hint">#757575</color>
+    <color name="input_stroke">#F44336</color>
+
+    <color name="title_color">#F44336</color>
+    <color name="background_color">#FFEBEE</color>
+</resources> 

@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "top.wkbin.skin"
+    namespace = "top.wkbin.skin.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "top.wkbin.skin"
-        minSdk = 31
+        applicationId = "top.wkbin.skin.app"
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -36,14 +36,9 @@ android {
 }
 
 dependencies {
-    // 引用 jar或module
-    implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+    implementation(project(":skin"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.material)
 }
