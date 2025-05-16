@@ -13,5 +13,8 @@
 .externalNativeBuild
 .cxx
 local.properties
-/skins/*/build/
+/skins/skin_green/build/
+/skins/skin_blue/build/
+/skins/skin_red/build/
+/skin/build
 /.idea/
