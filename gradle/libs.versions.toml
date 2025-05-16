@@ -13,6 +13,7 @@ constraintlayout = "2.1.4"
 parcelize = "1.8.0"
 appcompatVersion = "1.7.0"
 materialVersion = "1.12.0"
+skin = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -23,6 +24,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompatVersion" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+skin = { module = "top.wkbin:skin", version.ref = "skin" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
