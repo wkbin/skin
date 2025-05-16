@@ -1,23 +1,23 @@
 package top.wkbin.skin
 
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
-import android.util.AttributeSet
-import android.view.View
-import android.view.Window
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.view.ViewCompat
-import android.util.Log
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.switchmaterial.SwitchMaterial
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.radiobutton.MaterialRadioButton
 import android.app.Activity
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.AttributeSet
+import android.util.Log
+import android.view.View
+import android.widget.CompoundButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.progressindicator.BaseProgressIndicator
+import com.google.android.material.slider.Slider
+import com.google.android.material.textfield.TextInputLayout
 
 class SkinAttribute {
     private val attributes = arrayListOf(
@@ -146,25 +146,28 @@ class SkinView(private val view: View, private val skinPairs: List<SkinPair>) {
                 }
             }
             "buttonTint" -> {
-                when (view) {
-                    is MaterialButton -> view.backgroundTintList = SkinResources.get().colorStateList(pair.resId)
-                    is MaterialRadioButton -> view.buttonTintList = SkinResources.get().colorStateList(pair.resId)
+                if (view is CompoundButton){
+                    view.buttonTintList = SkinResources.get().colorStateList(pair.resId)
                 }
             }
             "trackTint" -> {
-                if (view is SwitchMaterial) {
-                    view.trackTintList = SkinResources.get().colorStateList(pair.resId)
-                }
-                if (view is com.google.android.material.slider.Slider){
-                    view.trackTintList = SkinResources.get().colorStateList(pair.resId)
+                when(view){
+                    is SwitchCompat -> {
+                        view.trackTintList = SkinResources.get().colorStateList(pair.resId)
+                    }
+                    is Slider->{
+                        view.trackTintList = SkinResources.get().colorStateList(pair.resId)
+                    }
                 }
             }
             "thumbTint" -> {
-                if (view is SwitchMaterial) {
-                    view.thumbTintList = SkinResources.get().colorStateList(pair.resId)
-                }
-                if (view is com.google.android.material.slider.Slider){
-                    view.thumbTintList = SkinResources.get().colorStateList(pair.resId)
+                when(view){
+                    is SwitchCompat -> {
+                        view.thumbTintList = SkinResources.get().colorStateList(pair.resId)
+                    }
+                    is Slider -> {
+                        view.thumbTintList = SkinResources.get().colorStateList(pair.resId)
+                    }
                 }
             }
             "strokeColor" -> {
@@ -179,22 +182,22 @@ class SkinView(private val view: View, private val skinPairs: List<SkinPair>) {
             }
             "boxStrokeColor" -> {
                 if (view is TextInputLayout) {
-                    view.setBoxStrokeColor(SkinResources.get().color(pair.resId))
+                    view.boxStrokeColor = SkinResources.get().color(pair.resId)
                 }
             }
             "boxBackgroundColor" -> {
                 if (view is TextInputLayout) {
-                    view.setBoxBackgroundColor(SkinResources.get().color(pair.resId))
+                    view.boxBackgroundColor = SkinResources.get().color(pair.resId)
                 }
             }
             "indicatorColor" -> {
-                if (view is LinearProgressIndicator) {
+                if (view is BaseProgressIndicator<*>) {
                     view.setIndicatorColor(SkinResources.get().color(pair.resId))
                 }
             }
             "trackColor" -> {
-                if (view is LinearProgressIndicator) {
-                    view.setTrackColor(SkinResources.get().color(pair.resId))
+                if (view is BaseProgressIndicator<*>) {
+                    view.trackColor = SkinResources.get().color(pair.resId)
                 }
             }
             "cursorColor" -> {
