@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 应用上次设置的皮肤包
         SkinManager.get().updateSkin(this)
 
         // 初始化控件
@@ -39,8 +40,6 @@ class MainActivity : AppCompatActivity() {
         slider = findViewById(R.id.slider)
         radioGroup = findViewById(R.id.radioGroup)
 
-        // 复制皮肤文件到应用目录
-        copySkinFiles()
 
         // 设置默认皮肤按钮
         findViewById<MaterialButton>(R.id.btnResetSkin).setOnClickListener {
@@ -73,21 +72,6 @@ class MainActivity : AppCompatActivity() {
         startProgressAnimation()
     }
 
-    private fun copySkinFiles() {
-        val skinFiles = listOf("skin_blue.apk", "skin_red.apk", "skin_green.apk")
-        for (skinFile in skinFiles) {
-            try {
-                val inputStream = assets.open(skinFile)
-                val outputFile = File(filesDir, skinFile)
-                val outputStream = FileOutputStream(outputFile)
-                inputStream.copyTo(outputStream)
-                inputStream.close()
-                outputStream.close()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
 
     private fun loadSkin(skin: Skin) {
         SkinManager.get().changeSkin(skin)

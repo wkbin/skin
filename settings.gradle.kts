@@ -10,6 +10,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = uri("${rootProject.projectDir}/maven-repo")
+        }
     }
 }
 

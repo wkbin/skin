@@ -229,9 +229,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:checkedButton="@id/firstButton"
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/firstButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="选项1"
@@ -239,6 +241,7 @@
                         app:buttonTint="@color/button_background" />
 
                     <RadioButton
+                        android:id="@+id/secondButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="选项2"

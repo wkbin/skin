@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrainsKotlinParcelize)
+    `maven-publish`
 }
 
 android {
@@ -31,6 +32,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -49,4 +57,25 @@ tasks.register("makeJar", Copy::class) {
     include("classes.jar")
     rename("classes.jar", "$jarName.jar")
     dependsOn("build")
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "top.wkbin"
+                artifactId = "skin"
+                version = "1.0.0"
+
+                from(components["release"])
+            }
+        }
+        
+        repositories {
+            maven {
+                name = "local"
+                url = uri("${rootProject.projectDir}/maven-repo")
+            }
+        }
+    }
 }

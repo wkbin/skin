@@ -11,19 +11,19 @@ object SkinConfiguration {
     )
 
     val skinBlue = Skin(
-        md5 = "4eae78ce495f473e0202a16663657fec",
+        md5 = "fcdaafb48faeee6e90bcb7c9f5818408",
         name = "skin_blue.skin",
         url = "skin_blue.apk"
     )
 
     val skinGreen = Skin(
-        md5 = "0246768f18c07215af72a4d6e41b5a58",
+        md5 = "4d9ee85ca80e7e5614aa0cb661bb738b",
         name = "skin_green.skin",
         url = "skin_green.apk"
     )
 
     val skinRed = Skin(
-        md5 = "bd094b14a935f215299d773252bc84e2",
+        md5 = "dd8bc7a3ae0a37cd505e50548b878173",
         name = "skin_red.skin",
         url = "skin_red.apk"
     )
