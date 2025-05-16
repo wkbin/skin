@@ -14,7 +14,7 @@
 
 ## 效果展示
 
-[docs/sample.mp4](docs/sample.mp4)
+![效果展示](docs/sample.gif)
 
 ## 快速开始
 
@@ -88,21 +88,9 @@ dependencies {
 </resources>
 ```
 
-2. 主题资源 (`res/values/themes.xml`):
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.Skin" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!-- 添加其他主题属性 -->
-    </style>
-</resources>
-```
 
-3. 图片资源：
-- 将需要替换的图片资源放在 `res/drawable` 目录下
+2. 图片资源：
+- 将需要替换的图片资源放在 `res/drawable`或 `res/mipmap` 目录下
 - 图片资源名称必须与主应用中的资源名称相同
 
 ### 3. 构建皮肤包
@@ -133,12 +121,7 @@ android {
 2. 使用 SkinManager 加载皮肤包：
 
 ```kotlin
-// 从 assets 加载
-val skin = SkinManager.get().loadSkinFromAssets("skin-blue.apk")
-
-// 从文件加载
-val skin = SkinManager.get().loadSkinFromFile(File(context.getExternalFilesDir(null), "skin-blue.apk"))
-
+val skin = Skin(md5 = "", path = "",url = "")
 // 应用皮肤
 SkinManager.get().changeSkin(skin)
 ```
@@ -154,13 +137,40 @@ SkinManager.get().changeSkin(skin)
 
 ### 创建皮肤包
 
-1. 创建新的 Android Library 模块
+1. 创建新的 Android Application 模块
 2. 添加需要的资源文件
 3. 构建 APK 文件
 
 ## 示例代码
 
 ```kotlin
+
+object SkinConfiguration {
+    val skinDefault = Skin(
+        md5 = "",
+        name = "",
+        url = ""
+    )
+
+    val skinBlue = Skin(
+        md5 = "fcdaafb48faeee6e90bcb7c9f5818408",
+        name = "skin_blue.skin",
+        url = "skin_blue.apk"
+    )
+
+    val skinGreen = Skin(
+        md5 = "4d9ee85ca80e7e5614aa0cb661bb738b",
+        name = "skin_green.skin",
+        url = "skin_green.apk"
+    )
+
+    val skinRed = Skin(
+        md5 = "dd8bc7a3ae0a37cd505e50548b878173",
+        name = "skin_red.skin",
+        url = "skin_red.apk"
+    )
+}
+
 // 设置默认皮肤
 findViewById<MaterialButton>(R.id.btnResetSkin).setOnClickListener {
     loadSkin(SkinConfiguration.skinDefault)
@@ -213,7 +223,6 @@ findViewById<MaterialButton>(R.id.btnGreenSkin).setOnClickListener {
 3. 皮肤包的包名必须与应用不同
 4. 建议在切换皮肤时添加加载动画
 5. 皮肤包中的资源名称必须与主应用中的资源名称保持一致
-6. 皮肤包 APK 必须签名，建议使用与主应用相同的签名配置
 
 ## 许可证
 
